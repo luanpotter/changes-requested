@@ -7,7 +7,7 @@ async function run(): Promise<void> {
 		const daysUntilClose = parseInt(core.getInput('days-until-close', {required: true}));
 		const triggerLabel = core.getInput('trigger-label', {required: true});
 		const closingComment = core.getInput('closing-comment', {required: true});
-		core.info(`Running with params ${daysUntilClose} ${closingComment}.`);
+		const dryRun = true;
 
 		const repository = github.context.payload.repository?.full_name;
 		if (!repository) {
@@ -17,12 +17,37 @@ async function run(): Promise<void> {
 		const [owner, repositoryName] = repository.split('/');
 		core.info(`Running for ${owner} / ${repositoryName}`);
 
-		const client = github.getOctokit(token);
-		const issues = await client.rest.issues.listForRepo({owner, repo: repositoryName});
-		const changesRequestedIssues = issues.data.filter(e => e.labels.some(l => l.name === triggerLabel));
-		core.info(`Found ${changesRequestedIssues.length} issues: ${changesRequestedIssues.map(e => e.title).join(', ')}.`);
+		const cutoffDate = new Date();
+		cutoffDate.setDate(cutoffDate.getDate() - daysUntilClose);
+		core.info(`Looking for issues older than ${cutoffDate.toISOString()}.`);
 
-		core.debug(new Date().toTimeString());
+		const client = github.getOctokit(token).rest;
+		const issues = await client.issues.listForRepo({owner, repo: repositoryName});
+		const outstandingIssues = issues.data.filter(e => e.labels.some(l => l.name === triggerLabel)).filter(e => e.updated_at < cutoffDate.toISOString());
+
+		core.info(`Found ${outstandingIssues.length} outstanding issues to be closed.`);
+
+		const promises = outstandingIssues.map(async e => {
+			core.info(`Will close issue ${e.number}`);
+			if (dryRun) {
+				return;
+			}
+			await client.issues.createComment({
+				owner,
+				repo: repositoryName,
+				// eslint-disable-next-line camelcase
+				issue_number: e.number,
+				body: closingComment,
+			});
+			await client.issues.update({
+				owner,
+				repo: repositoryName,
+				// eslint-disable-next-line camelcase
+				issue_number: e.number,
+				state: 'closed',
+			});
+		});
+		await Promise.all(promises);
 	} catch (error) {
 		core.setFailed(error.message);
 	}

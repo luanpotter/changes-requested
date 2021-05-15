@@ -8,5 +8,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Running action..."
-      - uses: luanpotter/changes-requested@v1
+      - name: Log
+        run: echo "Running action..."
+      - name: Changes Requested
+        uses: luanpotter/changes-requested@master

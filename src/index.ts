@@ -7,7 +7,10 @@ async function run(): Promise<void> {
 		const triggerLabel = core.getInput('triggerLabel');
 		const closingComment = core.getInput('closingComment');
 
-		core.info(`Variables: ${daysUntilClose} ${triggerLabel} ${closingComment} ${github}`);
+		const token = core.getInput('github-token', {required: true});
+		const client = github.getOctokit(token);
+		const issues = await client.rest.issues.list();
+		core.info(`Found ${issues.data.length} issues ${daysUntilClose} ${triggerLabel} ${closingComment}.`);
 
 		core.debug(new Date().toTimeString());
 	} catch (error) {

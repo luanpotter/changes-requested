@@ -7,7 +7,7 @@ async function run(): Promise<void> {
 		const daysUntilClose = parseInt(core.getInput('days-until-close', {required: true}));
 		const triggerLabel = core.getInput('trigger-label', {required: true});
 		const closingComment = core.getInput('closing-comment', {required: true});
-		const dryRun = true;
+		const dryRun = core.getInput('dry-run', {required: true}) !== 'false';
 
 		const repository = github.context.payload.repository?.full_name;
 		if (!repository) {

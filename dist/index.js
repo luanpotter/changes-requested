@@ -35,7 +35,7 @@ async function run() {
         const daysUntilClose = parseInt(core.getInput('days-until-close', { required: true }));
         const triggerLabel = core.getInput('trigger-label', { required: true });
         const closingComment = core.getInput('closing-comment', { required: true });
-        const dryRun = true;
+        const dryRun = core.getInput('dry-run', { required: true }) !== 'false';
         const repository = (_a = github.context.payload.repository) === null || _a === void 0 ? void 0 : _a.full_name;
         if (!repository) {
             core.error('Unable to run action; was not associated to any repository.');

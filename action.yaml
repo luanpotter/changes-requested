@@ -2,15 +2,18 @@ name: 'Changes Requested'
 description: 'A GitHub action to unobtrusively close issues marked with a label that had no updates'
 icon: alert-triangle
 inputs:
-  daysUntilClose:
+  github-token:
+    description: Your GITHUB_TOKEN variable.
+    required: true
+  days-until-close:
     description: How many days after adding the label should the issue be closed if there are no updates.
     required: true
     default: 5
-  triggerLabel:
+  trigger-label:
     description: The label that you manually add to issues to start the countdown.
     required: true
     default: 'changes-requested'
-  closingComment:
+  closing-comment:
     description: 'The message added by the bot on the closing comment on the issue.'
     required: true
     default: 'This issue was closed by the changes-requested bot due to inactivity.'

@@ -27,6 +27,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: luanpotter/changes-requested@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ## What are updates?

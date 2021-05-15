@@ -10,7 +10,24 @@ This is a GitHub Action to unobtrusively help you manage OSS issues. It works on
 
 ## Configuration
 
-...
+To set-up, just add a new workflow to your repo, running this action under a cron.
+
+Create a file under `.github/workflows/changes-requested.yml` with the content (see [here](.github/workflows/changes-requested.yml)):
+
+```
+name: changes-requested
+
+on:
+  schedule:
+    - cron: "0 * * * *" # pick a cron here, this is every 1h
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: luanpotter/changes-requested@master
+```
 
 ## What are updates?
 

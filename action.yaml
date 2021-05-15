@@ -1,6 +1,8 @@
 name: 'Changes Requested'
 description: 'A GitHub action to unobtrusively close issues marked with a label that had no updates'
-icon: alert-triangle
+branding:
+  icon: 'alert-triangle'  
+  color: 'gray-dark'
 inputs:
   github-token:
     description: Your GITHUB_TOKEN variable.

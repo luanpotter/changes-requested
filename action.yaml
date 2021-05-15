@@ -13,6 +13,9 @@ inputs:
     description: 'The message added by the bot on the closing comment on the issue.'
     required: true
     default: 'This issue was closed by the changes-requested bot due to inactivity.'
+on:
+  schedule:
+    - cron: "0 * * * *"
 
 runs:
   using: 'node12'

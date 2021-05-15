@@ -7,8 +7,7 @@ async function run(): Promise<void> {
 		const triggerLabel = core.getInput('triggerLabel');
 		const closingComment = core.getInput('closingComment');
 
-		core.debug(`Variables: ${daysUntilClose} ${triggerLabel} ${closingComment} ${github}`);
-		// debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
+		core.info(`Variables: ${daysUntilClose} ${triggerLabel} ${closingComment} ${github}`);
 
 		core.debug(new Date().toTimeString());
 	} catch (error) {

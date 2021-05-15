@@ -10,8 +10,7 @@ async function run() {
         const daysUntilClose = parseInt(core_1.default.getInput('daysUntilClose'));
         const triggerLabel = core_1.default.getInput('triggerLabel');
         const closingComment = core_1.default.getInput('closingComment');
-        core_1.default.debug(`Variables: ${daysUntilClose} ${triggerLabel} ${closingComment} ${github_1.default}`);
-        // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
+        core_1.default.info(`Variables: ${daysUntilClose} ${triggerLabel} ${closingComment} ${github_1.default}`);
         core_1.default.debug(new Date().toTimeString());
     }
     catch (error) {

@@ -1,5 +1,9 @@
 name: changes-requested
 
+on:
+  schedule:
+    - cron: "0 * * * *"
+
 jobs:
   build:
     steps:

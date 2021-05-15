@@ -12,5 +12,5 @@ jobs:
       - uses: luanpotter/changes-requested@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          days-until-close: 0
+          days-until-close: 1
           dry-run: true

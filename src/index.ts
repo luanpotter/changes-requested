@@ -30,6 +30,7 @@ async function run(): Promise<void> {
 		const promises = outstandingIssues.map(async e => {
 			core.info(`Will close issue ${e.number}`);
 			if (dryRun) {
+				core.info('Skipping because of dry-run=true.');
 				return;
 			}
 			await client.issues.createComment({

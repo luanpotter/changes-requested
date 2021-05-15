@@ -1,7 +1,7 @@
 # changes-requested
 
 <p align="center">
-  <img src="https://github.com/luanpotter/changes-requested/workflows/ci-cd/badge.svg?branch=main&event=push" alt="Test" />
+  <img src="https://github.com/luanpotter/changes-requested/workflows/ci-cd/badge.svg?branch=master&event=push" alt="Test" />
 </p>
 
 This is a GitHub Action to unobtrusively help you manage OSS issues. It works on 3 simple steps!

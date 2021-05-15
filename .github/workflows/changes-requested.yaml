@@ -6,5 +6,6 @@ on:
 
 jobs:
   build:
+    runs-on: ubuntu-latest
     steps:
       - uses: luanpotter/changes-requested@v1

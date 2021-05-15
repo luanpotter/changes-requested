@@ -14,7 +14,7 @@ To set-up, just add a new workflow to your repo, running this action under a cro
 
 Create a file under `.github/workflows/changes-requested.yml` with the content (see [here](.github/workflows/changes-requested.yml)):
 
-```
+```yaml
 name: changes-requested
 
 on:

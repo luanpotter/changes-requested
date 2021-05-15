@@ -1,5 +1,6 @@
 name: 'Changes Requested'
 description: 'A GitHub action to unobtrusively close issues marked with a label that had no updates'
+icon: alert-triangle
 inputs:
   daysUntilClose:
     description: How many days after adding the label should the issue be closed if there are no updates.

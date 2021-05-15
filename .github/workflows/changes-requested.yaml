@@ -1,0 +1,6 @@
+name: changes-requested
+
+jobs:
+  build:
+    steps:
+      - uses: luanpotter/changes-requested@v1

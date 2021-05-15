@@ -4,7 +4,11 @@
   "description": "A GitHub action to unobtrusively close issues marked with a label that had no updates",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "format": "prettier --write **/*.ts",
+    "format-check": "prettier --check **/*.ts",
+    "lint": "eslint src/**/*.ts",
+    "all": "npm run build && npm run format && npm run lint"
   },
   "repository": {
     "type": "git",
@@ -25,5 +29,16 @@
   "bugs": {
     "url": "https://github.com/luanpotter/changes-requested/issues"
   },
-  "homepage": "https://github.com/luanpotter/changes-requested#readme"
+  "homepage": "https://github.com/luanpotter/changes-requested#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.7",
+    "@actions/github": "^5.0.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/parser": "^4.23.0",
+    "eslint": "^7.26.0",
+    "eslint-plugin-github": "^4.1.3",
+    "prettier": "^2.3.0",
+    "typescript": "^4.2.4"
+  }
 }

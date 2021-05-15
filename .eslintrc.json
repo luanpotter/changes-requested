@@ -9,6 +9,7 @@
       "project": "./tsconfig.json"
     },
     "rules": {
+      "import/no-namespace": "off"
     },
     "env": {
       "node": true,

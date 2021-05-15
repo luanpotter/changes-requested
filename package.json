@@ -1,0 +1,29 @@
+{
+  "name": "changes-requested",
+  "version": "0.1.0",
+  "description": "A GitHub action to unobtrusively close issues marked with a label that had no updates",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luanpotter/changes-requested.git"
+  },
+  "keywords": [
+    "changes",
+    "requested",
+    "bot",
+    "action",
+    "github",
+    "git",
+    "issues",
+    "workflow"
+  ],
+  "author": "Luan Nico",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/luanpotter/changes-requested/issues"
+  },
+  "homepage": "https://github.com/luanpotter/changes-requested#readme"
+}

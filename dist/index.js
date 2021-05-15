@@ -48,8 +48,6 @@ async function run() {
         core.info(`Looking for issues older than ${cutoffDate.toISOString()}.`);
         const client = github.getOctokit(token).rest;
         const issues = await client.issues.listForRepo({ owner, repo: repositoryName });
-        const debugInfo = issues.data.map(e => `${e.title} => ${e.updated_at}`).join('\n');
-        core.info(`---\n${debugInfo}\n---`);
         const outstandingIssues = issues.data.filter(e => e.labels.some(l => l.name === triggerLabel)).filter(e => e.updated_at < cutoffDate.toISOString());
         core.info(`Found ${outstandingIssues.length} outstanding issues to be closed.`);
         const promises = outstandingIssues.map(async (e) => {
@@ -76,6 +74,7 @@ async function run() {
         await Promise.all(promises);
     }
     catch (error) {
+        core.error(error.message);
         core.setFailed(error.message);
     }
 }

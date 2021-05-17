@@ -9,20 +9,15 @@ async function run(): Promise<void> {
 		const closingComment = core.getInput('closing-comment', {required: true});
 		const dryRun = core.getInput('dry-run', {required: true}) !== 'false';
 
-		const repository = github.context.payload.repository?.full_name;
-		if (!repository) {
-			core.error('Unable to run action; was not associated to any repository.');
-			return;
-		}
-		const [owner, repositoryName] = repository.split('/');
-		core.info(`Running for ${owner} / ${repositoryName}`);
+		const {owner, repo} = github.context.repo;
+		core.info(`Running for ${owner} / ${repo}`);
 
 		const cutoffDate = new Date();
 		cutoffDate.setDate(cutoffDate.getDate() - daysUntilClose);
 		core.info(`Looking for issues older than ${cutoffDate.toISOString()}.`);
 
 		const client = github.getOctokit(token).rest;
-		const issues = await client.issues.listForRepo({owner, repo: repositoryName});
+		const issues = await client.issues.listForRepo({owner, repo});
 		const outstandingIssues = issues.data.filter(e => e.labels.some(l => l.name === triggerLabel)).filter(e => e.updated_at < cutoffDate.toISOString());
 		core.info(`Found ${outstandingIssues.length} outstanding issues to be closed.`);
 
@@ -34,14 +29,14 @@ async function run(): Promise<void> {
 			}
 			await client.issues.createComment({
 				owner,
-				repo: repositoryName,
+				repo,
 				// eslint-disable-next-line camelcase
 				issue_number: e.number,
 				body: closingComment,
 			});
 			await client.issues.update({
 				owner,
-				repo: repositoryName,
+				repo,
 				// eslint-disable-next-line camelcase
 				issue_number: e.number,
 				state: 'closed',

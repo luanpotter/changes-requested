@@ -29,25 +29,19 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(186));
 const github = __importStar(__nccwpck_require__(438));
 async function run() {
-    var _a;
     try {
         const token = core.getInput('github-token', { required: true });
         const daysUntilClose = parseInt(core.getInput('days-until-close', { required: true }));
         const triggerLabel = core.getInput('trigger-label', { required: true });
         const closingComment = core.getInput('closing-comment', { required: true });
         const dryRun = core.getInput('dry-run', { required: true }) !== 'false';
-        const repository = (_a = github.context.payload.repository) === null || _a === void 0 ? void 0 : _a.full_name;
-        if (!repository) {
-            core.error('Unable to run action; was not associated to any repository.');
-            return;
-        }
-        const [owner, repositoryName] = repository.split('/');
-        core.info(`Running for ${owner} / ${repositoryName}`);
+        const { owner, repo } = github.context.repo;
+        core.info(`Running for ${owner} / ${repo}`);
         const cutoffDate = new Date();
         cutoffDate.setDate(cutoffDate.getDate() - daysUntilClose);
         core.info(`Looking for issues older than ${cutoffDate.toISOString()}.`);
         const client = github.getOctokit(token).rest;
-        const issues = await client.issues.listForRepo({ owner, repo: repositoryName });
+        const issues = await client.issues.listForRepo({ owner, repo });
         const outstandingIssues = issues.data.filter(e => e.labels.some(l => l.name === triggerLabel)).filter(e => e.updated_at < cutoffDate.toISOString());
         core.info(`Found ${outstandingIssues.length} outstanding issues to be closed.`);
         const promises = outstandingIssues.map(async (e) => {
@@ -58,14 +52,14 @@ async function run() {
             }
             await client.issues.createComment({
                 owner,
-                repo: repositoryName,
+                repo,
                 // eslint-disable-next-line camelcase
                 issue_number: e.number,
                 body: closingComment,
             });
             await client.issues.update({
                 owner,
-                repo: repositoryName,
+                repo,
                 // eslint-disable-next-line camelcase
                 issue_number: e.number,
                 state: 'closed',

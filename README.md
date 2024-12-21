@@ -44,6 +44,6 @@ We use the field `updatedAt` of the Issue to determine its staleness. According 
 * edits to the issue or to comments
 * any other changes, basically.
 
-Therefore, this is a very unobtrusive action. You must first manually add the label. And then if there is absolutely no updates, no edits, no followups, after the determined cutoff date, only them the issue is closed.
+Therefore, this is a very unobtrusive action. You must first manually add the label. And then if there is absolutely no updates, no edits, no followups, after the determined cutoff date, only then the issue is closed.
 
 This is intended to be a much more lenient version of other similar Actions/Apps, but is still enough to help manage a great portion of all incoming issues.
